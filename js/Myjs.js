@@ -169,19 +169,15 @@ function generateNodeData(frequencies) {
 	freqArr.sort(function(a, b){
 		return b.size - a.size;
 	});
-
-
-	var top20 = freqArr.slice(0, 20);
-	//console.log(top20);
 	
-	cloudDraw(top20);
+	cloudDraw(freqArr);
 	
 }
 
 function cloudDraw(words){
 	d3.wordcloud()
 					.size([500, 300])
-					.fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+					.fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400", "#464300"]))
 					.words(words)
 					.onwordclick(function(d, i) {
 						if (d.href) { window.location = d.href; }
