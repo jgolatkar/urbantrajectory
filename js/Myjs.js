@@ -108,7 +108,7 @@ map.on('draw:created', function (e) {
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 		DrawRS(result);
 		generateWordCloudMap(result);
-
+		chordDraw(result);
 		});
 	}
 	
@@ -141,7 +141,6 @@ function DrawRS(trips) {
 
 function generateWordCloudMap(streetdata){
 	var wordsMap = {};
-	console.log("in generate word cloud");
 	streetdata.forEach(element => {
 		element['streetnames'].forEach(street => {
 				if (wordsMap.hasOwnProperty(street)) {
@@ -152,13 +151,13 @@ function generateWordCloudMap(streetdata){
 		});
 	});
 	//console.log(wordsMap);
-	generateNodeData(wordsMap)
+	generateNodeData(wordsMap);
+	
 }
 
 function generateNodeData(frequencies) {
 	// convert map to array
 	var freqArr = [];
-	var top20 = [];
 	//var it = frequencies.iterator;
 
 	Object.keys(frequencies).forEach(function(key) {
@@ -176,7 +175,7 @@ function generateNodeData(frequencies) {
 
 function cloudDraw(words){
 	d3.wordcloud()
-					.size([500, 300])
+					.size([450, 600])
 					.fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400", "#464300"]))
 					.words(words)
 					.onwordclick(function(d, i) {
@@ -185,6 +184,56 @@ function cloudDraw(words){
 					.start();
 	//d3.wordcloud.stop();
 }
+
+// function to draw chord plot
+
+var trips = [];
+function chordDraw(result){
+	let unique = new Set();
+	result.forEach(t => {
+		let from = t['streetnames'][0];
+		let to = t['streetnames'][t['streetnames'].length - 1];
+		let dist = t['distance'];
+		// add only unique paths to avoid cycles in data
+		unique.add(from);
+		if(!unique.has(to)){
+			trips.push([from,to,dist]);
+		}
+	});
+	//console.log('unique:',trips);
+	google.charts.load('current', {'packages':['sankey']});
+    google.charts.setOnLoadCallback(drawChart);
+}
+
+function drawChart(){
+	
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'From');
+	data.addColumn('string', 'To');
+	data.addColumn('number', 'Distance');
+	data.addRows(trips);
+	var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+                  '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+
+    var options = {
+	  width:450,
+      height: 800,
+      sankey: {
+        node: {
+		  colors: colors, // Allows you to select nodes.
+		  nodePadding: 30     // Vertical distance between nodes.    
+        },
+        link: {
+          colorMode: 'gradient',
+          colors: colors
+        }
+      }
+    };
+	var chart = new google.visualization.Sankey(document.getElementById('sankey'));
+	chart.draw(data, options);
+	trips = []; // reset trip array;
+}
+
 
 
 

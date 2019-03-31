@@ -48,7 +48,12 @@
 	<script src="js/d3.js"></script>
 	<script src="js/d3.layout.cloud.js"></script>
 	<script src="js/d3.wordcloud.js"></script>
-
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+<style>
+		#sankey{
+			overflow: auto;
+		}
+</style>
   </head>
   <body>
     <!-- Navigation -->
@@ -65,7 +70,7 @@
 	 <div id="map"></div>
 	 <div id="rightside">
 			<ul class="nav nav-pills">
-					<li class="active"><a data-toggle="pill" href="#word-cloud">Word Cloud</a></li>
+					<li class="active"><a data-toggle="pill" href="#wordcloud">Word Cloud</a></li>
 					<li><a data-toggle="pill" href="#scatter-plot">Scatter Plot</a></li>
 					<li><a data-toggle="pill" href="#sankey">Sankey</a></li>
 			</ul>
@@ -77,10 +82,7 @@
 				<h3>Scatter Plot</h3>
 				<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
-			<div id="sankey" class="tab-pane fade">
-				<h3>Menu 2</h3>
-				<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-			</div>
+			<div id="sankey" class="tab-pane fade"></div>
 		</div>
 	 </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -88,10 +90,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 	<!-- Your js File -->
+	
 		<script src="js/Myjs.js"></script>
-		<script>
-
-			
-			</script>
   </body>
 </html>
