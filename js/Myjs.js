@@ -303,8 +303,13 @@ function plotScatter(trips){
        .attr("x1", padding / 2)
        .attr("x2", size - padding / 2)
        .attr("y1", function(d) { return d; })
-	   .attr("y2", function(d) { return d; });
-	   
+	   .attr("y2", function(d) { return d; })  
+
+	   row.filter(function(d) { return d.i === d.j; }).append("text")
+      .attr("x", padding)
+      .attr("y", padding)
+      .attr("dy", ".71em")
+      .text(function(d) { return d.x; });
 
 
 // Frame.
@@ -320,7 +325,7 @@ function plotScatter(trips){
        .on("mousedown", mousedown);
 
 // Dot plot.
-  var dot = row.selectAll("circle")
+   row.selectAll("circle")
        .data(cross(traits))
      .enter().append("svg:circle")
        .attr("cx", function(d) { return position[d.x.x](d.y[d.x.x]); })
