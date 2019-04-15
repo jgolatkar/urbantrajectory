@@ -108,7 +108,7 @@ map.on('draw:created', function (e) {
 		//console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 		DrawRS(result);
 		generateWordCloudMap(result);
-		//chordDraw(result);
+		chordDraw(result);
 		plotScatter(result);
 		});
 	}
